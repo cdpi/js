@@ -1,4 +1,9 @@
 
+/aaa/
+/bbb/
+
 /node_modules/
+
+/temp/
 
 *-lock.*

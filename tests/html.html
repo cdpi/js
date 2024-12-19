@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+body
+	{
+	font-family: sans-serif;
+	font-size: 20px;
+	}
+
+input, button
+	{
+	font-family: sans-serif;
+	font-size: 20px;
+	}
+
+div
+	{
+	margin-bottom: 1em;
+	}
+
+</style>
+</head>
+<body>
+
+<div>
+	<button id="p">Paragraphe</button>
+	<button id="f">Formulaire</button>
+	<button id="b">Boutons</button>
+</div>
+
+<main>
+</main>
+
+<script type="module">
+
+import { paragraph, label, input, button } from "./content.mjs";
+
+function append(element, html)
+	{
+	element.insertAdjacentHTML("beforeend", html);
+	}
+
+const element = document.querySelector("main");
+
+const addParagraph = () => append(element, paragraph());
+
+const addInputText = () => append(element, ["<div>", label(), input(), "</div>"].join("\n"));
+
+const addButtons = () => append(element, ["<div>", button("Save"), button("Cancel"), "</div>"].join("\n"));
+
+document.querySelector("#p").addEventListener("click", e => addParagraph());
+document.querySelector("#f").addEventListener("click", e => addInputText());
+document.querySelector("#b").addEventListener("click", e => addButtons());
+
+</script>
+
+</body>
+</html>

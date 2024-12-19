@@ -3,9 +3,9 @@
 
 /**
  * @param {number} delay
- * @param {(e:Event) => void} callback
+ * @param {(e:any) => void} callback
  * 
- * @returns {(e:Event) => void}
+ * @returns {(e:any) => void}
  */
 function throttle(delay, callback)
 	{
