@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>Test throttle</title>
+</head>
+<body>
+
+<script type="module">
+
+import { throttle } from "../throttle.mjs";
+
+document.addEventListener("mousemove", throttle(500, e =>
+	{
+	console.debug("500: " + e.timeStamp);
+	}));
+
+document.addEventListener("mousemove", throttle(2000, e =>
+	{
+	console.debug("2sec: " + e.timeStamp);
+	}));
+
+</script>
+
+</body>
+</html>
