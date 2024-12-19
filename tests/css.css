@@ -1,0 +1,33 @@
+
+:root
+	{
+	font-size: 16px;;
+	}
+
+div
+	{
+	background-color: yellowgreen;
+	/*background-clip: content-box;*/
+	/*background-clip: initial;*/
+
+	box-sizing: border-box;
+	/*box-sizing: initial;*/
+
+	width: 40%;
+	height: 300px;
+
+	margin-top: 1px;
+	margin-right: 5em;
+	margin-bottom: 1rem;
+	margin-left: 1.5em;
+
+	padding-top: 3px;
+	padding-right: 3em;
+	padding-bottom: 2rem;
+	padding-left: 2.5em;
+
+	border-top: 2px solid black;
+	border-right: calc(1em / 4) solid black;
+	border-bottom: .5rem solid black;
+	border-left: 1em solid black;
+	}
