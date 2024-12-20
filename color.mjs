@@ -338,7 +338,7 @@ const _WebColor = WebColor;
 class ColorSelector extends EventTarget
 	{
 	/**
-	 * @param {Element} element
+	 * @param {HTMLElement} element
 	 */
 	constructor(element)
 		{
@@ -346,13 +346,11 @@ class ColorSelector extends EventTarget
 
 		this.element = element;
 
-		/*
-		this.color = new Color(0, 0, 100);
+		this.color = new HSL(0, 0, 100);
 
 		this.element.addEventListener("mousemove", this.mouseMoveHandler);
 		this.element.addEventListener("wheel", this.mouseWheelHandler);
 		this.element.addEventListener("click", this.mouseClickHandler);
-		*/
 		}
 
 	/**
@@ -366,10 +364,10 @@ class ColorSelector extends EventTarget
 			//console.debug(this.element.offsetLeft);
 			//console.debug(e.clientX);
 
-			//this.color.hue = Math.floor(e.clientX * 360 / this.element.clientWidth);
-			//this.color.lightness = Math.floor(e.clientY * 100 / this.element.clientHeight);
+			this.color.hue = Math.floor(e.clientX * 360 / this.element.clientWidth);
+			this.color.lightness = Math.floor(e.clientY * 100 / this.element.clientHeight);
 
-			//this.setBackgroundColor();
+			this.setBackgroundColor();
 			});
 		}
 
@@ -380,9 +378,9 @@ class ColorSelector extends EventTarget
 		{
 		return throttle(10, e =>
 			{
-			//this.color.saturation += ((e.deltaY > 0) ? 1 : -1);
+			this.color.saturation += ((e.deltaY > 0) ? 1 : -1);
 
-			//this.setBackgroundColor();
+			this.setBackgroundColor();
 			});
 		}
 
@@ -404,7 +402,7 @@ class ColorSelector extends EventTarget
 
 	setBackgroundColor()
 		{
-		//this.element.style.backgroundColor = this.color.hsl();
+		this.element.style.backgroundColor = this.color.toString();
 		}
 	}
 
