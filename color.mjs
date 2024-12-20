@@ -2,34 +2,54 @@
 //@ts-check
 
 import { throttle } from "./throttle.mjs";
-
-//import { sequence, increment } from "./array.mjs";
+import { between } from "./util.mjs";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// TODO: Dans util
-
-/**
- * @param {number} value
- * @param {number} minimum
- * @param {number} maximum
- * @param {boolean} rounded
- * 
- * @returns {number}
- */
-function between(value, minimum, maximum, rounded = false)
+class Component
 	{
-	if (rounded)
+	/**
+	 * @param {string} name
+	 * @param {number} minimum
+	 * @param {number} maximum
+	 * @param {boolean} rounded
+	 */
+	constructor(name, minimum, maximum, rounded = true)
 		{
-		value = Math.round(value);
+		this.name = name;
+		this.minimum = minimum;
+		this.maximum = maximum;
+		this.rounded = rounded;
+
+		this._value = 0;
 		}
 
-	return (value < minimum) ? minimum : ((value > maximum) ? maximum : value);
+	/**
+	 * @returns {number}
+	 */
+	get value()
+		{
+		return this._value;
+		}
+
+	/**
+	 * @param {number} value
+	 */
+	set value(value)
+		{
+		this._value = between(value, this.minimum, this.maximum, this.rounded);
+		}
+
+	/**
+	 * @returns {string}
+	 */
+	toString()
+		{
+		return `${this.name}: ${this.value}`;
+		}
 	}
 
-//const between = (value, min, max) => (value > max) ? max : ((value < min) ? min : value);
-//const between100 = value => between(value, 0, 100);
-//const between360 = value => between(value, 0, 360);
+const _Component = Component;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -38,6 +58,58 @@ class Color
 	constructor()
 		{
 		}
+
+	/*
+	toRGB()
+		{
+		if (this instanceof RGB)
+			{
+			return this;
+			}
+
+		if (this instanceof HSL)
+			{
+			let rgb = Color.HSL2RGB(this.hue, this.saturation / 100.0, this.lightness / 100.0);
+
+			return new RGB(rgb[0], rgb[1], rgb[2]);
+			}
+
+		throw new Error("unsupported");
+		}
+	*/
+
+	/*
+	toHSL()
+		{
+		if (this instanceof HSL)
+			{
+			return this;
+			}
+
+		throw new Error("not implemented");
+		}
+	*/
+
+	/*
+	static HSL2RGB(hue, saturation, lightness)
+		{
+		let a = saturation * Math.min(lightness, 1 - lightness);
+
+		let f = (n, k = (n + hue / 30) % 12) => lightness - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+
+		return [f(0), f(8), f(4)];
+
+		// input: h as an angle in [0,360] and s,l in [0,1] - output: r,g,b in [0,1]
+		/ *
+		function hsl2rgb(h,s,l)
+			{
+			let a=s*Math.min(l,1-l);
+			let f= (n,k=(n+h/30)%12) => l - a*Math.max(Math.min(k-3,9-k,1),-1);
+			return [f(0),f(8),f(4)];
+			}
+		* /
+		}
+	*/
 	}
 
 const _Color = Color;
@@ -46,25 +118,80 @@ const _Color = Color;
 
 class RGB extends Color
 	{
-	constructor()
+	/**
+	 * @param {number} red
+	 * @param {number} green
+	 * @param {number} blue
+	 */
+	constructor(red, green, blue)
 		{
 		super();
+
+		this._red = new Component("red", 0, 255);
+		this._green = new Component("green", 0, 255);
+		this._blue = new Component("blue", 0, 255);
+
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
+		}
+
+	/**
+	 * @returns {number}
+	 */
+	get red()
+		{
+		return this._red.value;
+		}
+
+	/**
+	 * @param {number} value
+	 */
+	set red(value)
+		{
+		this._red.value = value;
+		}
+
+	/**
+	 * @returns {number}
+	 */
+	get green()
+		{
+		return this._green.value;
+		}
+
+	/**
+	 * @param {number} value
+	 */
+	set green(value)
+		{
+		this._green.value = value;
+		}
+
+	/**
+	 * @returns {number}
+	 */
+	get blue()
+		{
+		return this._blue.value;
+		}
+
+	/**
+	 * @param {number} value
+	 */
+	set blue(value)
+		{
+		this._blue.value = value;
+		}
+
+	/**
+	 * @returns {string}
+	 */
+	toString()
+		{
+		return `rgb(${this.red}, ${this.green}, ${this.blue})`;
 		}
 	}
-
-// RGB
-/*
-const rgb2hex = (red, green, blue) =>
-	{
-	let rgb = sanitize(red, 0, 255);
-	rgb = (rgb << 8) + sanitize(green, 0, 255);
-	rgb = (rgb << 8) + sanitize(blue, 0, 255);
-
-	return rgb.toString(16);
-	};
-
-const rgb2html = (red, green, blue) => "#" + rgb2hex(red, green, blue).padStart(6, "0").toUpperCase();
-*/
 
 const _RGB = RGB;
 
@@ -81,44 +208,67 @@ class HSL extends Color
 		{
 		super();
 
+		this._hue = new Component("hue", 0, 360);
+		this._saturation = new Component("saturation", 0, 100, false);
+		this._lightness = new Component("lightness", 0, 100, false);
+
 		this.hue = hue;
 		this.saturation = saturation;
 		this.lightness = lightness;
 		}
 
-	/*
+	/**
+	 * @returns {number}
+	 */
 	get hue()
 		{
-		return this._hue;
+		return this._hue.value;
 		}
 
+	/**
+	 * @param {number} value
+	 */
 	set hue(value)
 		{
-		this._hue = between360(value);
+		this._hue.value = value;
 		}
 
+	/**
+	 * @returns {number}
+	 */
 	get saturation()
 		{
-		return this._saturation;
+		return this._saturation.value;
 		}
 
+	/**
+	 * @param {number} value
+	 */
 	set saturation(value)
 		{
-		this._saturation = between100(value);
+		this._saturation.value = value;
 		}
 
+	/**
+	 * @returns {number}
+	 */
 	get lightness()
 		{
-		return this._lightness;
+		return this._lightness.value;
 		}
 
+	/**
+	 * @param {number} value
+	 */
 	set lightness(value)
 		{
-		this._lightness = between100(value);
+		this._lightness.value = value;
 		}
-	*/
 
-	hsl()
+	/**
+	 * @returns {string}
+	 */
+	toString()
 		{
 		return `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
 		}
@@ -128,18 +278,28 @@ const _HSL = HSL;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class WebColor extends Color
+class WebColor extends RGB
 	{
-	constructor()
+	/**
+	 * @param {number} red
+	 * @param {number} green
+	 * @param {number} blue
+	 */
+	constructor(red, green, blue)
 		{
-		super();
+		super(red, green, blue);
 		}
 
 	/**
-	 * @returns {Array<Array<number>>}
+	 * @returns {Array<WebColor>}
+	 * 
+	 * @todo Retourner palette ??
 	 */
 	static get safeColors()
 		{
+		//safety palette
+		//safe-web palette
+
 		let component = Array.from({length: 6}, (value, index) => index * 51);
 
 		let colors = new Array();
@@ -150,13 +310,24 @@ class WebColor extends Color
 				{
 				component.forEach(blue =>
 					{
-					colors.push([red, green, blue]);
+					colors.push(new WebColor(red, green, blue));
 					});
 				});
 			});
 
 		return colors;
-		//return safeWebColors().map(rgb => rgb2html(...rgb));
+		}
+
+	/**
+	 * @returns {string}
+	 */
+	toString()
+		{
+		let rgb = this.red;
+		rgb = (rgb << 8) + this.green;
+		rgb = (rgb << 8) + this.blue;
+
+		return `#${rgb.toString(16).toUpperCase()}`;
 		}
 	}
 
@@ -241,19 +412,12 @@ const _ColorSelector = ColorSelector;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//safety palette
-//safe-web palette
-
 class Palette
 	{
-	/**
-	 * @param {Element} element
-	 */
-	constructor(element)
+	constructor()
 		{
-		this.element = element;
-
-		//this.colors = [];
+		/** @type {Array<RGB>} */
+		this.colors = new Array();
 		}
 
 	/*
@@ -269,6 +433,34 @@ class Palette
 		this.element.appendChild(rect);
 		}
 	*/
+
+	/**
+	 * @param {?string} format
+	 * 
+	 * @returns {string}
+	 */
+	getColors(format)
+		{
+		if (format === "css")
+			{
+			//return this.colors.map((color, index) => `--color-${index + 1}: ${color.toString()};`).join("\n");
+			return "TODO CSS";
+			}
+		else if (format === "html")
+			{
+			//let colors = this.colors.map(color => `<div class="color" style="background-color: ${color.toString()};">&nbsp;</div>`).join("\n");
+			//return `<div class="palette">${colors}</div>`;
+			return "TODO HTML";
+			}
+		else if (format === "gimp")
+			{
+			return "GIMP Palette\n" + this.colors.map(color => `${color.red} ${color.green} ${color.blue}`).join("\n");
+			}
+		else
+			{
+			return "TODO ELSE";
+			}
+		}
 	}
 
 const _Palette = Palette;
@@ -277,6 +469,7 @@ const _Palette = Palette;
 
 export
 	{
+	_Component as Component,
 	_Color as Color,
 	_RGB as RGB,
 	_HSL as HSL,

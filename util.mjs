@@ -72,6 +72,24 @@ function isBigInteger(value)
 	}
 
 /**
+ * @param {number} value
+ * @param {number} minimum
+ * @param {number} maximum
+ * @param {boolean} rounded
+ * 
+ * @returns {number}
+ */
+function between(value, minimum, maximum, rounded = true)
+	{
+	if (rounded)
+		{
+		value = Math.round(value);
+		}
+
+	return (value < minimum) ? minimum : ((value > maximum) ? maximum : value);
+	}
+
+/**
  * @param {any} value
  * 
  * @returns {boolean}
@@ -149,6 +167,7 @@ export
 	isBoolean,
 	isNumber,
 	isBigInteger,
+	between,
 	isString,
 	isBlank,
 	splitAndTrim,

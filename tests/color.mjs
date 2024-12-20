@@ -1,14 +1,27 @@
 
 //@ts-check
 
-/*
-import { WebColor } from "./color.mjs";
+import { RGB, WebColor } from "../color.mjs";
+import * as assert from "../assert.mjs";
 
-console.assert(WebColor.safeColors.length === 216, "safeColors != 216");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-let distinctSafeColors = new Set();
+let rgb = new RGB(23, 102, 231);
 
-WebColor.safeColors.forEach(safeColor => distinctSafeColors.add(safeColor));
+assert.equal(rgb.red, 23);
+assert.equal(rgb.green, 102);
+assert.equal(rgb.blue, 231);
 
-console.assert(distinctSafeColors.size === 216, "distinctSafeColors != 216");
-*/
+assert.equal(rgb.toString(), "rgb(23, 102, 231)");
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+let webColors = WebColor.safeColors;
+
+let webColorSet = new Set(webColors);
+
+assert.equal(webColors.length, 216);
+
+assert.equal(webColors.length, webColorSet.size);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
