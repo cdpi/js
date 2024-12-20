@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+	<title>Couleurs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="picker">
+	<div id="color">&nbsp;</div>
+	<div class="rgb">
+		<div>
+			<span class="red">&nbsp;</span>
+			<input id="red" type="range" min="0" max="255" value="255" />
+		</div>
+		<div>
+			<span class="green">&nbsp;</span>
+			<input id="green" type="range" min="0" max="255" value="255" />
+		</div>
+		<div>
+			<span class="blue">&nbsp;</span>
+			<input id="blue" type="range" min="0" max="255" value="255" />
+		</div>
+	</div>
+</div>
+
+<div id="remove10percent" class="palette">
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+</div>
+
+<script src="color.mjs" type="module"></script>
+
+</body>
+</html>
