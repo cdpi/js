@@ -3,10 +3,10 @@
     "lib": ["DOM", "ES2015", "ES2024"],
     "target": "ES2024",
     "module": "ESNext",
-    "allowJs": true,
-    "checkJs": true,
     "strict": true,
     "skipLibCheck": true,
+    "rootDir": "src",
     "outDir": "dist"
-  }
+  },
+  "exclude": ["dev", "dist", "js", "temp"]
 }

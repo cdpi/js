@@ -1,5 +1,5 @@
 
-import { Calendar } from "../calendar.mjs";
+import { Calendar } from "./calendar.mjs";
 
 class CalendarView extends HTMLElement
 	{
