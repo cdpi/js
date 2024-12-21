@@ -26,17 +26,51 @@ function rgb(red, green, blue)
 	}
 
 /**
- * @param {RGB} rgb
+ * @param {RGB} color
+ * 
+ * @returns {RGB}
  */
-function mix(rgb)
+function mix(color)
 	{
-	//rgb.red;
+	const P = 15;
+
+	let {red, green, blue} = color;
+
+	let percent = ((100 - P) / 100);
+
+	red = Math.floor(red * percent);
+	green = Math.floor(green * percent);
+	blue = Math.floor(blue * percent);
+
+	return rgb(red, green, blue);
 	}
 
 /**
- * @param {ArrayOfT<RGB>} colors
+ * @param {RGB} color
+ * 
+ * @returns {ArrayOfT<RGB>}
  */
-function palette(colors)
+function palette(color)
 	{
-	colors.push(rgb(232,23,43));
+	/** @type {ArrayOfT<RGB>} */
+	let colors = new Array();
+
+	colors.push(color);
+
+	for (let i = 0; i < 4; i++)
+		{
+		color = mix(color);
+
+		colors.push(color);
+		}
+
+	return colors;
 	}
+
+//let colors = palette(rgb(200, 100, 50));
+//console.log(colors);
+
+export
+	{
+	palette
+	};

@@ -1,17 +1,14 @@
 
-//@ts-check
-
 const _TWO_PI = 2 * Math.PI;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Point
 	{
-	/**
-	 * @param {number} x
-	 * @param {number} y
-	 */
-	constructor(x, y)
+	x:number;
+	y:number;
+
+	constructor(x:number, y:number)
 		{
 		this.x = x;
 		this.y = y;
@@ -23,7 +20,7 @@ class Point
 		}
 	}
 
-const _Point = Point;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /*
 class Polygon
@@ -33,9 +30,11 @@ class Polygon
 		this.n = n;
 		}
 	}
+*/
 
-const _Polygon = Polygon;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
 class Hexagon extends Polygon
 	{
 	constructor()
@@ -43,28 +42,19 @@ class Hexagon extends Polygon
 		super(6);
 		}
 	}
-
-const _Hexagon = Hexagon;
 */
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * @param {number} count
- * 
- * @returns {(angle:number) => number}
- */
-function toRadian(count)
+//type ToRadianFunction = (angle:number) => number;
+//function toRadian(count:number):ToRadianFunction
+function toRadian(count:number):(angle:number) => number
 	{
 	return angle => _TWO_PI * angle / count;
 	}
 
-/**
- * @param {number} r // radius // Pas sur radius (r de SVG)
- * 
- * @returns {(angle:number) => Point}
- */
-function toPoint(r)
+// radius // Pas sur radius (r de SVG)
+function toPoint(r:number):(angle:number) => Point
 	{
 	return angle =>
 		{
@@ -75,9 +65,11 @@ function toPoint(r)
 		};
 	}
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export
 	{
-	_Point as Point,
+	Point,
 	toRadian,
 	toPoint
 	};

@@ -17,9 +17,12 @@ class Component
 	constructor(name, minimum, maximum, rounded = true)
 		{
 		this.name = name;
-		this.minimum = minimum;
-		this.maximum = maximum;
-		this.rounded = rounded;
+
+		//this.minimum = minimum;
+		//this.maximum = maximum;
+		//this.rounded = rounded;
+		/** @type {(value:number) => number} */
+		this.validate = value => between(value, minimum, maximum, rounded);
 
 		this._value = 0;
 		}
@@ -37,7 +40,8 @@ class Component
 	 */
 	set value(value)
 		{
-		this._value = between(value, this.minimum, this.maximum, this.rounded);
+		//this._value = between(value, this.minimum, this.maximum, this.rounded);
+		this._value = this.validate(value);
 		}
 
 	/**

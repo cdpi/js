@@ -1,9 +1,5 @@
 
-//@ts-check
-
-import { sequence, increment } from "./array.mjs";
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+import { increment, sequence } from "./array.mjs";
 
 const _DAY_OF_WEEK = [6, 0, 1, 2, 3, 4, 5];
 
@@ -89,26 +85,20 @@ class Month
 		}
 	}
 
-const _Month = Month;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Calendar
 	{
-	/**
-	 * @param {Date} date
-	 * @param {Intl.DateTimeFormat} formatter
-	 */
-	constructor(date = new Date(), formatter = new Intl.DateTimeFormat())
+	date:Date;
+	formatter:Intl.DateTimeFormat;
+
+	constructor(date:Date = new Date(), formatter:Intl.DateTimeFormat = new Intl.DateTimeFormat())
 		{
-		this.formatter = formatter;
 		this.date = date;
+		this.formatter = formatter;
 		}
 
-	/**
-	 * @returns {Array<Date>}
-	 */
-	get days()
+	get days():Array<Date>
 		{
 		let month = this.date.getMonth();
 		let year = this.date.getFullYear();
@@ -116,66 +106,33 @@ class Calendar
 		return Calendar.getDaysOfMonth(month, year).map(Calendar.dayAsDate(month, year, true));
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get firstDayOfMonth()
+	get firstDayOfMonth():number
 		{
 		return Calendar.getFirstDayOfMonth(this.date.getFullYear(), this.date.getMonth());
 		}
 
-	/**
-	 * @param {Date|number} date
-	 * 
-	 * @returns {string}
-	 */
-	format(date)
+	format(date:Date|number):string
 		{
 		return this.formatter.format(date);
 		}
 
-	/**
-	 * @param {number} month 0 - 11
-	 * @param {number} year
-	 * 
-	 * @returns {number}
-	 */
-	static getFirstDayOfMonth(month, year)
+	static getFirstDayOfMonth(month:number, year:number):number
 		{
 		return _DAY_OF_WEEK[new Date(year, month, 1).getDay()];
 		}
 
-	/**
-	 * @param {number} month 0 - 11
-	 * @param {number} year
-	 * 
-	 * @returns {number}
-	 */
-	static getDaysInMonth(month, year)
+	static getDaysInMonth(month:number, year:number):number
 		{
 		// Mois + 1 pour avoir le mois suivant et day 0 pour avoir le jour précédent :)
 		return new Date(year, month + 1, 0).getDate();
 		}
 
-	/**
-	 * @param {number} month 0 - 11
-	 * @param {number} year
-	 * 
-	 * @returns {Array<number>}
-	 */
-	static getDaysOfMonth(month, year)
+	static getDaysOfMonth(month:number, year:number):Array<number>
 		{
 		return sequence(Calendar.getDaysInMonth(month, year), increment(1));
 		}
 
-	/**
-	 * @param {number} month 0 - 11
-	 * @param {number} year
-	 * @param {boolean} utc
-	 * 
-	 * @returns {(day:number) => Date}
-	 */
-	static dayAsDate(month, year, utc = false)
+	static dayAsDate(month:number, year:number, utc:boolean = false):(day:number) => Date
 		{
 		if (utc)
 			{
@@ -186,12 +143,10 @@ class Calendar
 		}
 	}
 
-const _Calendar = Calendar;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export
 	{
-	_Month as Month,
-	_Calendar as Calendar
+	Month,
+	Calendar
 	};

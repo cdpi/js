@@ -1,14 +1,7 @@
 
-//@ts-check
-
-/**
- * @param {number} delay
- * @param {(e:any) => void} callback
- * 
- * @returns {(e:any) => void}
- */
-function throttle(delay, callback)
+function throttle(delay:number, callback:(e:Event) => void):(e:any) => void
 	{
+	//@ts-ignore
 	let self = this;
 
 	let lastTimeStamp = 0;

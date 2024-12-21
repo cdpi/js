@@ -1,0 +1,49 @@
+const _TWO_PI = 2 * Math.PI;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class Point {
+    x;
+    y;
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    toString() {
+        return `(${this.x}, ${this.y})`;
+    }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+class Polygon
+    {
+    constructor(n)
+        {
+        this.n = n;
+        }
+    }
+*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+class Hexagon extends Polygon
+    {
+    constructor()
+        {
+        super(6);
+        }
+    }
+*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//type ToRadianFunction = (angle:number) => number;
+//function toRadian(count:number):ToRadianFunction
+function toRadian(count) {
+    return angle => _TWO_PI * angle / count;
+}
+// radius // Pas sur radius (r de SVG)
+function toPoint(r) {
+    return angle => {
+        let x = r * Math.cos(angle);
+        let y = r * Math.sin(angle);
+        return new Point(x, y);
+    };
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export { Point, toRadian, toPoint };

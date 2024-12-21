@@ -1,34 +1,22 @@
 
-//@ts-check
-
 import * as util from "./util.mjs";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class AssertError extends Error
 	{
-	/**
-	 * @param {string} message
-	 */
-	constructor(message)
+	constructor(message:string)
 		{
 		super(message);
 		}
 	}
 
-const _AssertError = AssertError;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isNull(value, message = "not null")
+function isNull(value:any, message:string = "not null"):void
 	{
 	if (!util.isNull(value))
 		{
@@ -37,14 +25,9 @@ function isNull(value, message = "not null")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isNotNull(value, message = "null")
+function isNotNull(value:any, message:string = "null"):void
 	{
 	if (util.isNull(value))
 		{
@@ -53,14 +36,9 @@ function isNotNull(value, message = "null")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function notNullOrUndefined(value, message = "null or undefined")
+function notNullOrUndefined(value:any, message:string = "null or undefined"):void
 	{
 	if (util.isNullOrUndefined(value))
 		{
@@ -69,14 +47,9 @@ function notNullOrUndefined(value, message = "null or undefined")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isBoolean(value, message = "not a boolean")
+function isBoolean(value:any, message:string = "not a boolean"):void
 	{
 	if (!util.isBoolean(value))
 		{
@@ -85,14 +58,9 @@ function isBoolean(value, message = "not a boolean")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isNumber(value, message = "not a number")
+function isNumber(value:any, message:string = "not a number"):void
 	{
 	notNullOrUndefined(value);
 
@@ -103,14 +71,9 @@ function isNumber(value, message = "not a number")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isArray(value, message = "not an array")
+function isArray(value:any, message:string = "not an array"):void
 	{
 	notNullOrUndefined(value);
 
@@ -121,20 +84,13 @@ function isArray(value, message = "not an array")
 	}
 
 /**
- * @param {?Array<any>} array
- * @param {number} length
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function arrayLength(array, length, message = "array length")
+function arrayLength(array:Array<any>, length:number, message:string = "array length"):void
 	{
 	isArray(array);
 	isNumber(length);
 
-	//@ts-ignore testé dans isArray
 	if (array.length !== length)
 		{
 		throw new AssertError(message);
@@ -142,22 +98,15 @@ function arrayLength(array, length, message = "array length")
 	}
 
 /**
- * @param {?Object} object
- * @param {?Array<string>} keys
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function objectKeys(object, keys, message = "object keys")
+function objectKeys(object:Object, keys:Array<string>, message:string = "object keys"):void
 	{
 	isObject(object);
 	isArray(keys);
 
 	let o = Object.keys(object).sort().join("");
 
-	//@ts-ignore testé dans isArray
 	let k = keys.sort().join("");
 
 	// Not OK ;-) hahahahhahahahaha
@@ -168,14 +117,9 @@ function objectKeys(object, keys, message = "object keys")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isObject(value, message = "not an object")
+function isObject(value:any, message:string = "not an object"):void
 	{
 	notNullOrUndefined(value);
 
@@ -186,15 +130,9 @@ function isObject(value, message = "not an object")
 	}
 
 /**
- * @param {any} value
- * @param {any} type
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isInstanceOf(value, type, message)
+function isInstanceOf(value:any, type:any, message:string):void
 	{
 	notNullOrUndefined(value);
 
@@ -205,15 +143,9 @@ function isInstanceOf(value, type, message)
 	}
 
 /**
- * @param {any} left
- * @param {any} right
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function equal(left, right, message = "not equal")
+function equal(left:any, right:any, message:string = "not equal"):void
 	{
 	if (!(left === right))
 		{
@@ -222,14 +154,9 @@ function equal(left, right, message = "not equal")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isTrue(value, message = "not true")
+function isTrue(value:any, message = "not true"):void
 	{
 	isBoolean(value, message);
 
@@ -237,14 +164,9 @@ function isTrue(value, message = "not true")
 	}
 
 /**
- * @param {any} value
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function isFalse(value, message = "not false")
+function isFalse(value:any, message:string = "not false"):void
 	{
 	isBoolean(value, message);
 
@@ -252,14 +174,9 @@ function isFalse(value, message = "not false")
 	}
 
 /**
- * @param {Function} code
- * @param {string} message
- * 
- * @returns {void}
- * 
  * @throws {AssertError}
  */
-function throwError(code, message = "don't throw error")
+function throwError(code:Function, message:string = "don't throw error"):void
 	{
 	let ok = null;
 
@@ -284,7 +201,7 @@ function throwError(code, message = "don't throw error")
 
 export
 	{
-	_AssertError as AssertError,
+	AssertError,
 
 	isNull,
 	isNotNull,

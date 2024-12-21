@@ -1,14 +1,5 @@
 
-//@ts-check
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * @param {string} url
- * 
- * @returns {Promise}
- */
-async function loadImage(url)
+async function loadImage(url:string):Promise<unknown>
 	{
 	return new Promise((resolve, reject) =>
 		{
@@ -22,12 +13,7 @@ async function loadImage(url)
 		});
 	}
 
-/**
- * @param {HTMLImageElement} image
- * 
- * @returns {Uint8ClampedArray<ArrayBufferLike>|null}
- */
-function getPixels(image)
+function getPixels(image:HTMLImageElement):Uint8ClampedArray<ArrayBufferLike>|null
 	{
 	let canvas = document.createElement("canvas");
 
@@ -46,13 +32,7 @@ function getPixels(image)
 	return context.getImageData(0, 0, image.naturalWidth, image.naturalHeight).data;
 	}
 
-/**
- * @param {HTMLImageElement} image
- * @param {Number} pixelSize
- * 
- * @returns {Promise}
- */
-async function pixelate(image, pixelSize)
+async function pixelate(image:HTMLImageElement, pixelSize:number):Promise<unknown>
 	{
 	let rows = Math.floor(image.naturalHeight / pixelSize);
 	let columns = Math.floor(image.naturalWidth / pixelSize);

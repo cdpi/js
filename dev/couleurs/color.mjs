@@ -1,6 +1,8 @@
 
 //@ts-check
 
+import { palette as makePercentPalette } from "./percent.mjs";
+
 /**
  * @param {string} cssSelector
  * 
@@ -39,12 +41,12 @@ function colorComponentOnChange(event)
 	color.style.backgroundColor = `rgb(${red.valueAsNumber}, ${green.valueAsNumber}, ${blue.valueAsNumber})`;
 
 	//mix1(red.valueAsNumber, green.valueAsNumber, blue.valueAsNumber);
-	remove10percent(red.valueAsNumber, green.valueAsNumber, blue.valueAsNumber);
+	percent(red.valueAsNumber, green.valueAsNumber, blue.valueAsNumber);
 	}
 
-red.addEventListener("change", colorComponentOnChange);
-green.addEventListener("change", colorComponentOnChange);
-blue.addEventListener("change", colorComponentOnChange);
+red.addEventListener("input", colorComponentOnChange);
+green.addEventListener("input", colorComponentOnChange);
+blue.addEventListener("input", colorComponentOnChange);
 
 /**
  * @param {number} red
@@ -73,35 +75,20 @@ function mix1(red, green, blue)
  * @param {number} green
  * @param {number} blue
  */
-function remove10percent(red, green, blue)
+function percent(red, green, blue)
 	{
-	/** @type {HTMLDivElement} */
-	//@ts-ignore
-	let palette = document.querySelector("#remove10percent");
+	let palette = document.querySelector("#percent-palette");
 
-	/** @type {HTMLDivElement} */
-	//@ts-ignore
-	let color1 = palette.querySelector("div:nth-child(1)");
+	let colors = makePercentPalette({red, green, blue});
 
-	/** @type {HTMLDivElement} */
-	//@ts-ignore
-	let color2 = palette.querySelector("div:nth-child(2)");
+	colors.forEach((color, index) =>
+		{
+		//@ts-ignore
+		let div = palette.querySelector(`div:nth-child(${index + 1})`);
 
-	/** @type {HTMLDivElement} */
-	//@ts-ignore
-	let color3 = palette.querySelector("div:nth-child(3)");
+		let {red, green, blue} = color;
 
-	/** @type {HTMLDivElement} */
-	//@ts-ignore
-	let color4 = palette.querySelector("div:nth-child(4)");
-
-	/** @type {HTMLDivElement} */
-	//@ts-ignore
-	let color5 = palette.querySelector("div:nth-child(5)");
-
-	color1.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-	color2.style.backgroundColor = `rgb(${red - 10}, ${green - 10}, ${blue - 10})`;
-	color3.style.backgroundColor = `rgb(${red - 20}, ${green - 10}, ${blue - 20})`;
-	color4.style.backgroundColor = `rgb(${red - 30}, ${green - 10}, ${blue - 30})`;
-	color5.style.backgroundColor = `rgb(${red - 40}, ${green - 10}, ${blue - 40})`;
+		//@ts-ignore
+		div.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+		});
 	}
