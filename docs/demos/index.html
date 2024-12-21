@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+	<title>Couleurs</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="styles/input-range.css" />
+<style>
+
+.picker
+	{
+	display: flex;
+	}
+
+.rgb
+	{
+	margin-left: 1rem;
+	display: flex;
+	flex-direction: column;
+	}
+
+.rgb > input:not(:last-child)
+	{
+	margin-bottom: 1rem;
+	}
+
+#color
+	{
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	}
+
+.palette
+	{
+	display: flex;
+	}
+
+.palette > div
+	{
+	width: 100px;
+	height: 100px;
+	}
+
+</style>
+</head>
+<body>
+
+<div class="picker">
+	<div id="color">&nbsp;</div>
+	<div class="rgb">
+		<input id="red" class="color-component red" type="range" min="0" max="255" value="255" />
+		<input id="green" class="color-component green" type="range" min="0" max="255" value="255" />
+		<input id="blue" class="color-component blue" type="range" min="0" max="255" value="255" />
+	</div>
+</div>
+
+<div id="percent-palette" class="palette">
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+	<div>&nbsp;</div>
+</div>
+
+<script>
+
+let makePercentPalette = (percentage) =>
+	{
+	let percent = value => Math.floor(value * ((100 - percentage) / 100));
+
+	let palette = document.querySelector("#percent-palette");
+
+	let colors = Array.from(palette.querySelectorAll("div"));
+
+	return (red, green, blue) =>
+		{
+		colors.forEach(color =>
+			{
+			color.style.backgroundColor = `rgb(${red},${green},${blue})`;
+
+			red = percent(red);
+			green = percent(green);
+			blue = percent(blue);
+			});
+		};
+	};
+
+let percentPalette = makePercentPalette(15);
+
+let color = document.querySelector("#color");
+let red = document.querySelector("#red");
+let green = document.querySelector("#green");
+let blue = document.querySelector("#blue");
+
+function colorComponentOnInput(event)
+	{
+	color.style.backgroundColor = `rgb(${red.valueAsNumber}, ${green.valueAsNumber}, ${blue.valueAsNumber})`;
+
+	percentPalette(red.valueAsNumber, green.valueAsNumber, blue.valueAsNumber);
+	}
+
+red.addEventListener("input", colorComponentOnInput);
+green.addEventListener("input", colorComponentOnInput);
+blue.addEventListener("input", colorComponentOnInput);
+
+</script>
+
+<!--
+<script src="color.mjs" type="module"></script>
+<color-component></color-component>
+<script src="../../ui/ColorPalette.mjs" type="module"></script>
+<input is="color-component2" />
+<color-palette></color-palette>
+<script>
+function random(min, max)
+	{
+	return Math.floor(Math.random() * (max - min + 1) + min);
+	}
+console.log(0.0 * (6 - 1 + 1) + 1);
+//console.log(256 * 0.2748852891233634);
+console.log(256 * 0.9999999999999999);
+//console.log(Math.random());
+//console.log(Math.floor(255.98));
+//console.log(Math.round(255.98));
+</script>
+-->
+
+</body>
+</html>

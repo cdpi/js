@@ -1,5 +1,4 @@
 
-
 class ColorPalette extends HTMLElement
 	{
 	constructor()
@@ -9,8 +8,6 @@ class ColorPalette extends HTMLElement
 
 	connectedCallback()
 		{
-		//console.log("ColorPalette.connectedCallback()");
-
 		let shadow = this.attachShadow({mode: "open"});
 
 		let style = document.createElement("style");

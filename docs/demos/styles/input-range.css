@@ -1,0 +1,81 @@
+
+input[type="range"].color-component
+	{
+	background: transparent;
+	appearance: none;
+	-webkit-appearance: none;
+	}
+
+/******************************************************************/
+
+input[type="range"].color-component::-moz-range-track
+	{
+	background-color: #EEE;
+	height: 1rem;
+	cursor: pointer;
+	}
+
+input[type="range"].color-component::-moz-range-progress
+	{
+	height: 1rem;
+	cursor: pointer;
+	}
+
+input[type="range"].color-component::-moz-range-thumb
+	{
+	background-color: black;
+	width: .5rem;
+	height: 1.5rem;
+	border: 0px;
+	border-radius: 0px;
+	cursor: pointer;
+	}
+
+input[type="range"].color-component.red::-moz-range-progress
+	{
+	background-color: red;
+	}
+
+input[type="range"].color-component.green::-moz-range-progress
+	{
+	background-color: green;
+	}
+
+input[type="range"].color-component.blue::-moz-range-progress
+	{
+	background-color: blue;
+	}
+
+/******************************************************************/
+
+input[type="range"].color-component::-webkit-slider-runnable-track
+	{
+	background-color: #EEE;
+	height: 1rem;
+	border-radius: 0px;
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	}
+
+input[type="range"].color-component::-webkit-slider-thumb
+	{
+	background-color: black;
+	width: .5rem;
+	height: 1.5rem;
+	height: 1rem;
+	border: 0px;
+	border-radius: 0px;
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	}
+
+/*
+input[type="range"].color-component::-webkit-progress-value
+	{
+	background-color: gold;
+	appearance: none;
+	-webkit-appearance: none;
+	}
+*/

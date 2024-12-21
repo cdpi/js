@@ -3,7 +3,6 @@ class ColorPalette extends HTMLElement {
         super();
     }
     connectedCallback() {
-        //console.log("ColorPalette.connectedCallback()");
         let shadow = this.attachShadow({ mode: "open" });
         let style = document.createElement("style");
         style.textContent = `
