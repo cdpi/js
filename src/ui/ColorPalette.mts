@@ -1,5 +1,4 @@
 
-//@ts-check
 
 class ColorPalette extends HTMLElement
 	{

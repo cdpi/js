@@ -1,59 +1,44 @@
 
-//@ts-check
-
-import { throttle } from "./throttle.mjs";
 import { between } from "./util.mjs";
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Component
 	{
-	/**
-	 * @param {string} name
-	 * @param {number} minimum
-	 * @param {number} maximum
-	 * @param {boolean} rounded
-	 */
-	constructor(name, minimum, maximum, rounded = true)
+	private _value:number;
+
+	private minimum:number;
+	private maximum:number;
+	private rounded:boolean;
+
+	name:string;
+
+	constructor(name:string, minimum:number, maximum:number, rounded:boolean = true)
 		{
 		this.name = name;
 
-		//this.minimum = minimum;
-		//this.maximum = maximum;
-		//this.rounded = rounded;
-		/** @type {(value:number) => number} */
-		this.validate = value => between(value, minimum, maximum, rounded);
+		this.minimum = minimum;
+		this.maximum = maximum;
+		this.rounded = rounded;
 
 		this._value = 0;
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get value()
+	get value():number
 		{
 		return this._value;
 		}
 
-	/**
-	 * @param {number} value
-	 */
-	set value(value)
+	set value(value:number)
 		{
-		//this._value = between(value, this.minimum, this.maximum, this.rounded);
-		this._value = this.validate(value);
+		this._value = between(value, this.minimum, this.maximum, this.rounded);
 		}
 
-	/**
-	 * @returns {string}
-	 */
-	toString()
+	toString():string
 		{
 		return `${this.name}: ${this.value}`;
 		}
 	}
-
-const _Component = Component;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -116,18 +101,15 @@ class Color
 	*/
 	}
 
-const _Color = Color;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class RGB extends Color
 	{
-	/**
-	 * @param {number} red
-	 * @param {number} green
-	 * @param {number} blue
-	 */
-	constructor(red, green, blue)
+	private _red:Component;
+	private _green:Component;
+	private _blue:Component;
+
+	constructor(red:number, green:number, blue:number)
 		{
 		super();
 
@@ -140,75 +122,51 @@ class RGB extends Color
 		this.blue = blue;
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get red()
+	get red():number
 		{
 		return this._red.value;
 		}
 
-	/**
-	 * @param {number} value
-	 */
-	set red(value)
+	set red(value:number)
 		{
 		this._red.value = value;
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get green()
+	get green():number
 		{
 		return this._green.value;
 		}
 
-	/**
-	 * @param {number} value
-	 */
-	set green(value)
+	set green(value:number)
 		{
 		this._green.value = value;
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get blue()
+	get blue():number
 		{
 		return this._blue.value;
 		}
 
-	/**
-	 * @param {number} value
-	 */
-	set blue(value)
+	set blue(value:number)
 		{
 		this._blue.value = value;
 		}
 
-	/**
-	 * @returns {string}
-	 */
-	toString()
+	toString():string
 		{
 		return `rgb(${this.red}, ${this.green}, ${this.blue})`;
 		}
 	}
 
-const _RGB = RGB;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class HSL extends Color
 	{
-	/**
-	 * @param {number} hue
-	 * @param {number} saturation
-	 * @param {number} lightness
-	 */
-	constructor(hue, saturation, lightness)
+	private _hue:Component;
+	private _saturation:Component;
+	private _lightness:Component;
+
+	constructor(hue:number, saturation:number, lightness:number)
 		{
 		super();
 
@@ -221,85 +179,55 @@ class HSL extends Color
 		this.lightness = lightness;
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get hue()
+	get hue():number
 		{
 		return this._hue.value;
 		}
 
-	/**
-	 * @param {number} value
-	 */
-	set hue(value)
+	set hue(value:number)
 		{
 		this._hue.value = value;
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get saturation()
+	get saturation():number
 		{
 		return this._saturation.value;
 		}
 
-	/**
-	 * @param {number} value
-	 */
-	set saturation(value)
+	set saturation(value:number)
 		{
 		this._saturation.value = value;
 		}
 
-	/**
-	 * @returns {number}
-	 */
-	get lightness()
+	get lightness():number
 		{
 		return this._lightness.value;
 		}
 
-	/**
-	 * @param {number} value
-	 */
-	set lightness(value)
+	set lightness(value:number)
 		{
 		this._lightness.value = value;
 		}
 
-	/**
-	 * @returns {string}
-	 */
-	toString()
+	toString():string
 		{
 		return `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
 		}
 	}
 
-const _HSL = HSL;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class WebColor extends RGB
 	{
-	/**
-	 * @param {number} red
-	 * @param {number} green
-	 * @param {number} blue
-	 */
-	constructor(red, green, blue)
+	constructor(red:number, green:number, blue:number)
 		{
 		super(red, green, blue);
 		}
 
 	/**
-	 * @returns {Array<WebColor>}
-	 * 
 	 * @todo Retourner palette ??
 	 */
-	static get safeColors()
+	static get safeColors():Array<WebColor>
 		{
 		//safety palette
 		//safe-web palette
@@ -322,10 +250,7 @@ class WebColor extends RGB
 		return colors;
 		}
 
-	/**
-	 * @returns {string}
-	 */
-	toString()
+	toString():string
 		{
 		let rgb = this.red;
 		rgb = (rgb << 8) + this.green;
@@ -335,91 +260,15 @@ class WebColor extends RGB
 		}
 	}
 
-const _WebColor = WebColor;
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class ColorSelector extends EventTarget
-	{
-	/**
-	 * @param {HTMLElement} element
-	 */
-	constructor(element)
-		{
-		super();
-
-		this.element = element;
-
-		this.color = new HSL(0, 0, 100);
-
-		this.element.addEventListener("mousemove", this.mouseMoveHandler);
-		this.element.addEventListener("wheel", this.mouseWheelHandler);
-		this.element.addEventListener("click", this.mouseClickHandler);
-		}
-
-	/**
-	 * @returns {(e:any) => void}
-	 */
-	get mouseMoveHandler()
-		{
-		return throttle(20, e =>
-			{
-			//console.debug(this.element.clientLeft);
-			//console.debug(this.element.offsetLeft);
-			//console.debug(e.clientX);
-
-			this.color.hue = Math.floor(e.clientX * 360 / this.element.clientWidth);
-			this.color.lightness = Math.floor(e.clientY * 100 / this.element.clientHeight);
-
-			this.setBackgroundColor();
-			});
-		}
-
-	/**
-	 * @returns {(e:any) => void}
-	 */
-	get mouseWheelHandler()
-		{
-		return throttle(10, e =>
-			{
-			this.color.saturation += ((e.deltaY > 0) ? 1 : -1);
-
-			this.setBackgroundColor();
-			});
-		}
-
-	/**
-	 * @returns {(e:any) => void}
-	 */
-	get mouseClickHandler()
-		{
-		return e =>
-			{
-			// TODO: Quel Event ? click, change,...
-			let event = new Event("select");
-
-			//event.color = this.color;
-
-			this.dispatchEvent(event);
-			};
-		}
-
-	setBackgroundColor()
-		{
-		this.element.style.backgroundColor = this.color.toString();
-		}
-	}
-
-const _ColorSelector = ColorSelector;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class Palette
 	{
+	readonly colors:Array<RGB>;
+
 	constructor()
 		{
-		/** @type {Array<RGB>} */
-		this.colors = new Array();
+		this.colors = new Array<RGB>();
 		}
 
 	/*
@@ -436,12 +285,7 @@ class Palette
 		}
 	*/
 
-	/**
-	 * @param {?string} format
-	 * 
-	 * @returns {string}
-	 */
-	getColors(format)
+	getColors(format:string|null):string
 		{
 		if (format === "css")
 			{
@@ -465,17 +309,13 @@ class Palette
 		}
 	}
 
-const _Palette = Palette;
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export
 	{
-	_Component as Component,
-	_Color as Color,
-	_RGB as RGB,
-	_HSL as HSL,
-	_WebColor as WebColor,
-	_ColorSelector as ColorSelector,
-	_Palette as Palette
+	Component,
+	Color,
+	RGB,
+	HSL,
+	WebColor
 	};
