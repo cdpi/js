@@ -1,0 +1,8 @@
+
+#dist/*
+
+#js/*
+
+*.jpg
+*.jpeg
+*.png
