@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>DEV-JS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body
+	{
+	margin: 0;
+	touch-action: none;
+	}
+#windowInnerHeight
+	{
+	background-color: gold;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 20px; height: 724px;
+	}
+/*
+#windowOuterHeight{}
+#windowScreenHeight{}
+*/
+#windowScreenAvailHeight
+	{
+	height: 1700px;
+	}
+</style>
+</head>
+<body>
+
+<canvas id="grid" width="600" height="600"></canvas>
+
+<script type="module">
+
+//import { Map } from "./js/game.mjs";
+//import { Drawing } from "./js/drawing.mjs";
+
+import { Drawing, Map } from "./dist/monk.min.mjs";
+
+const columns = 10;
+const rows = 10;
+
+const canvas = document.querySelector("#grid");
+const ctx = canvas.getContext("2d");
+
+const cellWidth = canvas.width / columns;
+const cellHeight = canvas.height / rows;
+
+const margin = 5;
+
+const map = new Map();
+
+const points = map.makeRandomPointInEachCell(columns, rows, cellWidth, margin);
+
+const drawing = new Drawing(ctx);
+
+const pp = [points[0][0], points[0][1], points[1][1], points[1][0]];
+
+drawing.drawLineBetweenPoints(pp, "red");
+
+for (let row = 0; row < rows; row++)
+	{
+	for (let column = 0; column < columns; column++)
+		{
+		const point = points[row][column];
+
+		ctx.beginPath();
+		ctx.arc(point.x, point.y, 4, 0, Math.PI * 2);
+		ctx.fillStyle = "blue";
+		ctx.fill();
+		}
+	}
+
+</script>
+
+<!--
+<div id="windowInnerHeight"></div>
+<div id="windowOuterHeight"></div>
+<div id="windowScreenHeight"></div>
+<div id="windowScreenAvailHeight">dfdfdf</div>
+
+<script>
+
+console.log(window.innerHeight); // 724
+console.log(window.outerHeight); // 840
+console.log(window.screen.height); // 1080
+console.log(window.screen.availHeight); // 1053
+
+document.body.addEventListener('touchstart', (e) =>
+	{
+	//console.log('touchstart');
+	//console.log(this);
+	e.stopImmediatePropagation();
+	});
+
+document.body.addEventListener('touchend', (e) => console.log('touchend'));
+
+</script>
+-->
+
+<img src="visage-femme-blanche-peau-mouillee.jpg" width="200px" height="auto">
+
+<input id="fileSelector" type="file" accept="image/*" style="display: none;">
+
+<button id="fileSelect">Choisissez une image</button>
+
+<script>
+
+const fileSelector = document.querySelector("#fileSelector");
+const fileSelect = document.querySelector("#fileSelect");
+
+fileSelector.addEventListener("change", handleFiles, false);
+fileSelect.addEventListener("click", e => fileSelector.click(), false);
+
+//const pix = new Worker("dist/pix.min.js");
+const pix = new Worker("js/pix.js");
+
+function handleFiles(e)
+	{
+	if (this.files.length !== 1)
+		{
+		return;
+		}
+
+	pix.postMessage(this.files[0]);
+	}
+
+function piiiiiiix(e)
+	{
+	console.log(e.data);
+	document.body.insertAdjacentHTML("beforeend", e.data);
+	}
+
+pix.addEventListener("message", piiiiiiix, false);
+
+</script>
+
+</body>
+</html>

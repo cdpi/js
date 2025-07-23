@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+tsc
+
+uglifyjs js/dom.mjs > js/dom.min.mjs
+uglifyjs js/drawing.mjs > js/drawing.min.mjs
+uglifyjs js/game.mjs > js/game.min.mjs
+uglifyjs js/geometry.mjs > js/geometry.min.mjs
+
+cat js/dom.min.mjs js/drawing.min.mjs js/game.min.mjs js/geometry.min.mjs > dist/monk.min.mjs
+
+uglifyjs js/pix.js > js/pix.min.js
+
+cat js/pix.min.js > dist/pix.min.js

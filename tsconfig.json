@@ -1,0 +1,9 @@
+{
+"compilerOptions":
+	{
+	"rootDir": "./src",
+	"outDir": "./js",
+	"module": "esnext",
+	"target": "es2024"
+	}
+}
