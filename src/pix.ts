@@ -1,5 +1,5 @@
 
-import { RGB, Color } from "./drawing.mjs";
+import { IRGB, Color } from "./drawing.mjs";
 
 const color = new Color();
 
@@ -24,16 +24,16 @@ async function getOffscreenCanvasFromImageBlob(blob:Blob):Promise<OffscreenCanva
 	return canvas;
 	}
 
-function getAverageColors(context:CanvasImageData, imageWidth:number, imageHeight:number, columns:number, rows:number):Array<Array<RGB>>
+function getAverageColors(context:CanvasImageData, imageWidth:number, imageHeight:number, columns:number, rows:number):Array<Array<IRGB>>
 	{
 	const cellWidth = Math.floor(imageWidth / columns);
 	const cellHeight = Math.floor(imageHeight / rows);
 
-	const colors = new Array<Array<RGB>>();
+	const colors = new Array<Array<IRGB>>();
 
 	for (let y = 0; y < rows; y++)
 		{
-		const row = new Array<RGB>();
+		const row = new Array<IRGB>();
 
 		for (let x = 0; x < columns; x++)
 			{

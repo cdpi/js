@@ -7,7 +7,12 @@ uglifyjs js/drawing.mjs > js/drawing.min.mjs
 uglifyjs js/game.mjs > js/game.min.mjs
 uglifyjs js/geometry.mjs > js/geometry.min.mjs
 
-cat js/dom.min.mjs js/drawing.min.mjs js/game.min.mjs js/geometry.min.mjs > dist/monk.min.mjs
+sed -f commands.sed js/dom.min.mjs > js/dom.min2.mjs
+sed -f commands.sed js/drawing.min.mjs > js/drawing.min2.mjs
+sed -f commands.sed js/game.min.mjs > js/game.min2.mjs
+sed -f commands.sed js/geometry.min.mjs > js/geometry.min2.mjs
+
+cat js/geometry.min2.mjs js/dom.min2.mjs js/drawing.min2.mjs js/game.min2.mjs src/export.txt > dist/lib.min.mjs
 
 uglifyjs js/pix.js > js/pix.min.js
 

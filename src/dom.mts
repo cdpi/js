@@ -1,10 +1,10 @@
 
-import { Renderer } from "./drawing.mjs";
+import type { IRenderer } from "./drawing.mjs";
 
 /**
  * @since 0.1.0
  */
-class SVGRenderer implements Renderer<SVGElement, void>
+class SVGRenderer implements IRenderer<SVGElement, void>
 	{
 	public constructor()
 		{

@@ -1,10 +1,10 @@
 
-import type { Point } from "./geometry.mjs";
+import type { IPoint } from "./geometry.mjs";
 
 /**
  * @since 0.1.0
  */
-interface RGB
+interface IRGB
 	{
 	red:number;
 	green:number;
@@ -14,7 +14,7 @@ interface RGB
 /**
  * @since 0.1.0
  */
-interface Renderer<T, R>
+interface IRenderer<T, R>
 	{
 	render(to:T):R
 	}
@@ -27,7 +27,7 @@ class Color
 	/**
 	 * @since 0.1.0
 	 */
-	getAverageColor(context:CanvasImageData, x:number, y:number, width:number, height:number):RGB
+	getAverageColor(context:CanvasImageData, x:number, y:number, width:number, height:number):IRGB
 		{
 		const count = width * height;
 
@@ -53,7 +53,7 @@ class Color
 /**
  * @since 0.1.0
  */
-class CanvasRenderer implements Renderer<CanvasRenderingContext2D, void>
+class CanvasRenderer implements IRenderer<CanvasRenderingContext2D, void>
 	{
 	private context:CanvasRenderingContext2D;
 
@@ -109,7 +109,7 @@ class Drawing
 	/**
 	 * @since 0.1.0
 	 */
-	public drawLineBetweenPoints(points:Array<Point>, color:string):void
+	public drawLineBetweenPoints(points:Array<IPoint>, color:string):void
 		{
 		//console.debug(points);
 
@@ -130,8 +130,8 @@ class Drawing
 
 export
 	{
-	RGB,
+	IRGB,
+	IRenderer,
 	Color,
-	Renderer,
 	Drawing
 	};
