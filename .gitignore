@@ -1,7 +1,8 @@
 
 node_modules/
-temp/
 
+temp/
+dev/
 dev.ts
 dev.d.ts
 dev.js
