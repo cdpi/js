@@ -45,16 +45,25 @@ async function getColor(code:string):Promise<Color>
 	return {code, name, quote, ral, hex} as Color;
 	}
 
-/*
 async function getColors():Promise<Array<Color>>
 	{
 	const codes = await getCodes();
 
-	await sleep(1000);
+	const colors = new Array<Color>();
 
-	return [];
+	for (let i = 0; i < codes.length; i++)
+		{
+		const code = codes[i];
+
+		const color = await getColor(code);
+
+		colors.push(color);
+
+		await sleep(1000);
+		}
+
+	return colors;
 	}
-*/
 
 // gris noirs BK
 // bleus BL
@@ -71,8 +80,7 @@ async function getColors():Promise<Array<Color>>
 export
 	{
 	type Color,
-
 	getCodes,
 	getColor,
-	//getColors
+	getColors
 	};

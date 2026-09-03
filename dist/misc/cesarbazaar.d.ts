@@ -7,4 +7,5 @@ type Color = {
 };
 declare function getCodes(): Promise<Array<string>>;
 declare function getColor(code: string): Promise<Color>;
-export { type Color, getCodes, getColor, };
+declare function getColors(): Promise<Array<Color>>;
+export { type Color, getCodes, getColor, getColors };

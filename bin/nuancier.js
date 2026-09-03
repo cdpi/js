@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { getColor } from "../dist/misc/cesarbazaar.js";
+import { getColors } from "../dist/misc/cesarbazaar.js";
 
-const color = await getColor("BL007");
+const colors = await getColors();
 
-console.log(color);
+console.log(JSON.stringify(colors, null, 4));

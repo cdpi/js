@@ -1,3 +1,4 @@
+import { type Nullable } from "./util.js";
 type RGB = {
     r: number;
     g: number;
@@ -16,4 +17,5 @@ type RedGreenBlueAlpha = RedGreenBlue & {
 };
 type Color = RGB | RGBA | RedGreenBlue | RedGreenBlueAlpha;
 declare function toHex(color: number, prefix: string, length: number): string;
-export { type RGB, type RGBA, type RedGreenBlue, type RedGreenBlueAlpha, type Color, toHex };
+declare function parseRRGGBB(text: string): Nullable<RedGreenBlue>;
+export { type RGB, type RGBA, type RedGreenBlue, type RedGreenBlueAlpha, type Color, toHex, parseRRGGBB };
