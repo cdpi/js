@@ -94,6 +94,16 @@ function toHex(value:number, upperCase:boolean = false, padLength:number = 0):st
 // Array
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+function alphabet(upperCase:boolean = false):Array<string>
+	{
+	const start = upperCase ? 65 : 97;
+
+	//return Array.from({length: 26}, (_value, index) => String.fromCharCode(start + index));
+	return sequence(26)
+		.map(value => start + value)
+		.map(codePoint => String.fromCharCode(codePoint));
+	}
+
 function chunk<T>(array:Array<T>, size:number):Array<Array<T>>
 	{
 	const result:Array<Array<T>> = new Array<Array<T>>();
@@ -218,6 +228,7 @@ export
 
 	toHex,
 
+	alphabet,
 	chunk,
 	sequence,
 	shuffle,

@@ -59,6 +59,13 @@ function toHex(value, upperCase = false, padLength = 0) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Array
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function alphabet(upperCase = false) {
+    const start = upperCase ? 65 : 97;
+    //return Array.from({length: 26}, (_value, index) => String.fromCharCode(start + index));
+    return sequence(26)
+        .map(value => start + value)
+        .map(codePoint => String.fromCharCode(codePoint));
+}
 function chunk(array, size) {
     const result = new Array();
     for (let i = 0; i < array.length; i += size) {
@@ -126,4 +133,4 @@ class TimeoutError extends Error {
     }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export { TEXT_VARIATION_SELECTOR, EMOJI_VARIATION_SELECTOR, stringOrNull, stringNotEmpty, removeAccents, getCodePoints, notTextVariationSelector, notEmojiVariationSelector, toHex, chunk, sequence, shuffle, getRandom, NotImplementedError, EmptyStringError, CircularReferenceError, HTTPError, TimeoutError };
+export { TEXT_VARIATION_SELECTOR, EMOJI_VARIATION_SELECTOR, stringOrNull, stringNotEmpty, removeAccents, getCodePoints, notTextVariationSelector, notEmojiVariationSelector, toHex, alphabet, chunk, sequence, shuffle, getRandom, NotImplementedError, EmptyStringError, CircularReferenceError, HTTPError, TimeoutError };

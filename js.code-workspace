@@ -1,6 +1,9 @@
 {
 "folders": [
 	{
+	"path": "../Données pour tests"
+	},
+	{
 	"path": ".",
 	"name": "JavaScript"
 	},
