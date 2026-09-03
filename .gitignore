@@ -1,0 +1,9 @@
+
+node_modules/
+temp/
+
+dev.ts
+dev.d.ts
+dev.js
+
+*-lock.json
