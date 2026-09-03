@@ -1,10 +1,10 @@
 import { HTTPError } from "./util.js";
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * Crée une instance de fetch capable d'annuler la requête précédente et de s'arrêter après un délai imparti.
  *
  * @author Gemini
  */
+//function createCancelableFetch():(url:string, options?:RequestInit, timeout?:number) => Promise<any>
 function createCancelableFetch() {
     let controller = null;
     return async function (url, options = {}, timeout = 5000) {
@@ -44,9 +44,5 @@ function createCancelableFetch() {
         }
     };
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//let f = createCancelableFetch();
-//f("ssd", {}, 2000);
-//f("sdsd", {}, 2000);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 export { createCancelableFetch };

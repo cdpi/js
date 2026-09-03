@@ -3,12 +3,17 @@ import { type Nullable, HTTPError } from "./util.js";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// TODO: Attention que JSON en retour !!! return await response.json();
+
+type CancelableFetch = (url:string, options?:RequestInit, timeout?:number) => Promise<any>
+
 /**
  * Crée une instance de fetch capable d'annuler la requête précédente et de s'arrêter après un délai imparti.
  * 
  * @author Gemini
  */
-function createCancelableFetch():(url:string, options?:RequestInit, timeout?:number) => Promise<any>
+//function createCancelableFetch():(url:string, options?:RequestInit, timeout?:number) => Promise<any>
+function createCancelableFetch():CancelableFetch
 	{
 	let controller:Nullable<AbortController> = null;
 
@@ -73,13 +78,8 @@ function createCancelableFetch():(url:string, options?:RequestInit, timeout?:num
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//let f = createCancelableFetch();
-//f("ssd", {}, 2000);
-//f("sdsd", {}, 2000);
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 export
 	{
+	type CancelableFetch,
 	createCancelableFetch
 	};
