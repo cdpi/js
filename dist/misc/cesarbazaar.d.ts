@@ -1,11 +1,17 @@
+import { type RedGreenBlueAlpha } from "../color.js";
 type Color = {
     code: string;
     name: string;
     quote: string;
     ral: string;
     hex: string;
+    rgb: RedGreenBlueAlpha;
 };
-declare function getCodes(): Promise<Array<string>>;
-declare function getColor(code: string): Promise<Color>;
-declare function getColors(): Promise<Array<Color>>;
-export { type Color, getCodes, getColor, getColors };
+declare class CesarBazaar {
+    constructor();
+    buildPalette(colors: Array<Color>): string;
+    getColors(): Promise<Array<Color>>;
+    private getCodes;
+    private getColor;
+}
+export { type Color, CesarBazaar };

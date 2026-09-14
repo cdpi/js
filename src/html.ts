@@ -318,12 +318,11 @@ class Path
 		return this.commands.map(command => command.toString()).join(" ");
 		}
 
-	/*
-	public static getCurvedPathFromPoints(points:Array<Point2D>, tension:number = 0.2):Path
+	public static getCurvedPathFromPoints(points:Point2D[], tension:number = 0.2):Path
 		{
-		const path:Path = new Path();
+		const path = new Path();
 
-		const n:number = points.length;
+		const n = points.length;
 
 		path.moveTo(points[0]);
 
@@ -335,7 +334,7 @@ class Path
 			const point4:Point2D = points[(i + 2) % n];
 
 			//const controlPoints:Array<Point2D> = Curve.getControlPoints(point1, point2, point3, point4, tension);
-			const controlPoints:Array<Point2D> = getControlPoints(point1, point2, point3, point4, tension);
+			const controlPoints = getControlPoints(point1, point2, point3, point4, tension);
 
 			//commands.push(new CurveTo(controlPoints[0], controlPoints[1], point3));
 			path.curveTo([controlPoints[0], controlPoints[1], point3]);
@@ -345,7 +344,6 @@ class Path
 
 		return path;
 		}
-	*/
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

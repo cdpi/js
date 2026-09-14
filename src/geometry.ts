@@ -1,5 +1,5 @@
 
-import { getRandom } from "./util.js";
+import { type Nullable, getRandom } from "./util.js";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -155,6 +155,58 @@ function getControlPoints(before:Point2D, from:Point2D, to:Point2D, after:Point2
 	return new Array<Point2D>({x: x1, y: y1}, {x: x2, y: y2});
 	}
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Polygon
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function polygonGetVertices(n:number, radius:number, cx:number, cy:number, modifier:Nullable<RadiusModifier> = null):Point2D[]
+	{
+	const vertices:Point2D[] = [];
+
+	const step = TWOPI / n;
+
+	for (let i = 0; i < n; i++)
+		{
+		const angle = i * step;
+
+		let newRadius = radius;
+
+		if (modifier)
+			{
+			newRadius = modifier(newRadius, angle, i);
+			}
+
+		const x = cx + Math.cos(angle) * newRadius;
+		const y = cy + Math.sin(angle) * newRadius;
+
+		vertices.push({x, y} as Point2D);
+		}
+
+	return vertices;
+	}
+
+class Polygon
+	{
+	public constructor(public n:number, public radius:number, public cx:number = 0, public cy:number = 0)
+		{
+		}
+
+	public get vertices():Point2D[]
+		{
+		return polygonGetVertices(this.n, this.radius, this.cx, this.cy);
+		}
+
+	public getVertices(modifier:Nullable<RadiusModifier> = null):Point2D[]
+		{
+		return polygonGetVertices(this.n, this.radius, this.cx, this.cy, modifier);
+		}
+
+	public getRandomVertices(minimum:number, maximum:number):Point2D[]
+		{
+		return this.getVertices(getRandomRadiusModifier(minimum, maximum));
+		}
+	}
+
 /*
 class Polygon
 	{
@@ -196,6 +248,27 @@ class Polygon
 */
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Hexagon
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class Hexagon extends Polygon
+	{
+	public constructor(public radius:number, public cx:number = 0, public cy:number = 0)
+		{
+		super(6, radius, cx, cy);
+		}
+	}
+
+/*
+const hex = new Hexagon(500);
+
+hex.cx = 800;
+hex.cy = 600;
+
+hex.getRandomVertices(300, 600);
+*/
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export
 	{
@@ -209,5 +282,9 @@ export
 	getWaveRadiusModifier,
 	getControlPoints,
 	pointToString,
-	pointsToString
+	pointsToString,
+
+	polygonGetVertices,
+	Polygon,
+	Hexagon
 	};

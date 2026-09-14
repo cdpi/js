@@ -2,7 +2,7 @@
 import { readFileSync } from "node:fs";
 
 import { Configuration } from "./configuration.js";
-import { Pilot } from "../wiz2.js";
+import { Pilot } from "./lib.js";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

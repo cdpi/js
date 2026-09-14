@@ -17,5 +17,5 @@ type RedGreenBlueAlpha = RedGreenBlue & {
 };
 type Color = RGB | RGBA | RedGreenBlue | RedGreenBlueAlpha;
 declare function toHex(color: number, prefix: string, length: number): string;
-declare function parseRRGGBB(text: string): Nullable<RedGreenBlue>;
-export { type RGB, type RGBA, type RedGreenBlue, type RedGreenBlueAlpha, type Color, toHex, parseRRGGBB };
+declare function parse(text: string): Nullable<RedGreenBlueAlpha>;
+export { type RGB, type RGBA, type RedGreenBlue, type RedGreenBlueAlpha, type Color, toHex, parse };

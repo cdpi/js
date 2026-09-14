@@ -66,6 +66,45 @@ function getControlPoints(before, from, to, after, tension) {
     const y2 = to.y - (after.y - from.y) * tension;
     return new Array({ x: x1, y: y1 }, { x: x2, y: y2 });
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Polygon
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function polygonGetVertices(n, radius, cx, cy, modifier = null) {
+    const vertices = [];
+    const step = TWOPI / n;
+    for (let i = 0; i < n; i++) {
+        const angle = i * step;
+        let newRadius = radius;
+        if (modifier) {
+            newRadius = modifier(newRadius, angle, i);
+        }
+        const x = cx + Math.cos(angle) * newRadius;
+        const y = cy + Math.sin(angle) * newRadius;
+        vertices.push({ x, y });
+    }
+    return vertices;
+}
+class Polygon {
+    n;
+    radius;
+    cx;
+    cy;
+    constructor(n, radius, cx = 0, cy = 0) {
+        this.n = n;
+        this.radius = radius;
+        this.cx = cx;
+        this.cy = cy;
+    }
+    get vertices() {
+        return polygonGetVertices(this.n, this.radius, this.cx, this.cy);
+    }
+    getVertices(modifier = null) {
+        return polygonGetVertices(this.n, this.radius, this.cx, this.cy, modifier);
+    }
+    getRandomVertices(minimum, maximum) {
+        return this.getVertices(getRandomRadiusModifier(minimum, maximum));
+    }
+}
 /*
 class Polygon
     {
@@ -106,4 +145,26 @@ class Polygon
     }
 */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export { TWOPI, getRandomRadiusModifier, getWaveRadiusModifier, getControlPoints, pointToString, pointsToString };
+// Hexagon
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class Hexagon extends Polygon {
+    radius;
+    cx;
+    cy;
+    constructor(radius, cx = 0, cy = 0) {
+        super(6, radius, cx, cy);
+        this.radius = radius;
+        this.cx = cx;
+        this.cy = cy;
+    }
+}
+/*
+const hex = new Hexagon(500);
+
+hex.cx = 800;
+hex.cy = 600;
+
+hex.getRandomVertices(300, 600);
+*/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export { TWOPI, getRandomRadiusModifier, getWaveRadiusModifier, getControlPoints, pointToString, pointsToString, polygonGetVertices, Polygon, Hexagon };

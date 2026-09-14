@@ -73,6 +73,7 @@ declare class Path {
     curveTo(points: Array<Point2D>): this;
     closePath(): this;
     toString(): string;
+    static getCurvedPathFromPoints(points: Point2D[], tension?: number): Path;
 }
 declare enum Source {
     SourceGraphic = 0,

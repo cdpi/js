@@ -1,4 +1,4 @@
-import { pointToString, pointsToString } from "./geometry.js";
+import { getControlPoints, pointToString, pointsToString } from "./geometry.js";
 //type Point = Point2D | DOMPoint;
 function getEventTargetElement(event) {
     if (event.target) {
@@ -162,6 +162,23 @@ class Path {
     }
     toString() {
         return this.commands.map(command => command.toString()).join(" ");
+    }
+    static getCurvedPathFromPoints(points, tension = 0.2) {
+        const path = new Path();
+        const n = points.length;
+        path.moveTo(points[0]);
+        for (let i = 0; i < n; i++) {
+            const point1 = points[(i - 1 + n) % n];
+            const point2 = points[i];
+            const point3 = points[(i + 1) % n];
+            const point4 = points[(i + 2) % n];
+            //const controlPoints:Array<Point2D> = Curve.getControlPoints(point1, point2, point3, point4, tension);
+            const controlPoints = getControlPoints(point1, point2, point3, point4, tension);
+            //commands.push(new CurveTo(controlPoints[0], controlPoints[1], point3));
+            path.curveTo([controlPoints[0], controlPoints[1], point3]);
+        }
+        path.closePath();
+        return path;
     }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
