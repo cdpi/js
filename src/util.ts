@@ -158,7 +158,7 @@ class NotImplementedError extends Error
 
 		this.name = "NotImplementedError";
 
-		Object.setPrototypeOf(this, NotImplementedError.prototype);
+		//Object.setPrototypeOf(this, NotImplementedError.prototype);
 		}
 	}
 
@@ -170,7 +170,7 @@ class EmptyStringError extends Error
 
 		this.name = "EmptyStringError";
 
-		Object.setPrototypeOf(this, EmptyStringError.prototype);
+		//Object.setPrototypeOf(this, EmptyStringError.prototype);
 		}
 	}
 
@@ -182,7 +182,7 @@ class CircularReferenceError extends Error
 
 		this.name = "CircularReferenceError";
 
-		Object.setPrototypeOf(this, CircularReferenceError.prototype);
+		//Object.setPrototypeOf(this, CircularReferenceError.prototype);
 		}
 	}
 
@@ -194,7 +194,7 @@ class HTTPError extends Error
 
 		this.name = "HTTPError";
 
-		Object.setPrototypeOf(this, HTTPError.prototype);
+		//Object.setPrototypeOf(this, HTTPError.prototype);
 		}
 	}
 
@@ -206,7 +206,7 @@ class TimeoutError extends Error
 
 		this.name = "TimeoutError";
 
-		Object.setPrototypeOf(this, TimeoutError.prototype);
+		//Object.setPrototypeOf(this, TimeoutError.prototype);
 		}
 	}
 

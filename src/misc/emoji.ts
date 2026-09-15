@@ -1,5 +1,5 @@
 
-import { getCodePoints, notEmojiVariationSelector } from "./util.js";
+import { getCodePoints, notEmojiVariationSelector } from "../util.js";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

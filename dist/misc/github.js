@@ -1,31 +1,53 @@
+import { HTTPError } from "../util.js";
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-async function getContents(owner, repository, path = "") {
-    const url = `https://api.github.com/repos/${owner}/${repository}/contents/${path}`;
-    const response = await fetch(url);
-    return await response.json();
+const EndPoint = "https://api.github.com/";
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+interface Organization
+    {
+    id:string;
+    name:string;
+    description:string;
+    url:string;
+    created:string;
+    }
+*/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class User {
+    api;
+    slug;
+    constructor(api, slug) {
+        this.api = api;
+        this.slug = slug;
+    }
 }
-function toFiles(contents) {
-    const isFile = (content) => content.type === "file" && content.download_url !== null;
-    const toFile = (content) => {
-        return { name: content.name, path: content.path, url: content.download_url };
-    };
-    return contents.filter(isFile).map(toFile);
+class Person extends User {
 }
-function toLinks(files) {
-    const toLink = (file) => {
-        const link = document.createElement("a");
-        link.setAttribute("href", file.url);
-        link.textContent = file.name;
-        return link;
-    };
-    return files.map(toLink);
+class Organization extends User {
+    async getInformations() {
+        return await this.api.get(`${EndPoint}orgs/${this.slug}`);
+    }
+    async getRepositories() {
+        return await this.api.get(`${EndPoint}orgs/${this.slug}/repos`);
+    }
 }
-function links(owner, repository, path = "", element) {
-    getContents(owner, repository, path).then(toFiles).then(toLinks).then(links => {
-        links.forEach(link => {
-            element.appendChild(link);
-        });
-    });
+class API {
+    constructor() {
+    }
+    getOrganization(slug) {
+        return new Organization(this, slug);
+    }
+    async api(url, options = null) {
+        const response = await fetch(url, options || {});
+        //console.debug(response.status, response.statusText);
+        if (!response.ok) {
+            throw new HTTPError(response.status, response.statusText);
+        }
+        return await response.json();
+    }
+    async get(url) {
+        return await this.api(url);
+    }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-export { links };
+export { API, Organization };

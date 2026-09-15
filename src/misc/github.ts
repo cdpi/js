@@ -1,89 +1,84 @@
 
-import { type Nullable } from "../util.js";
+import { type Nullable, HTTPError } from "../util.js";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-interface File
-	{
-	name:string;
-	path:string;
-	url:string;
-	}
-
-interface Links
-	{
-	self:string;
-	git:string;
-	html:string;
-	}
-
-interface Content
-	{
-	name:string;
-	path:string;
-	sha:string;
-	size:number;
-	url:string;
-	html_url:string;
-	git_url:string;
-	download_url:Nullable<string>;
-	type:string;
-	_links:Links;
-	}
+const EndPoint = "https://api.github.com/";
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-async function getContents(owner:string, repository:string, path:string = ""):Promise<Content[]>
+/*
+interface Organization
 	{
-	const url = `https://api.github.com/repos/${owner}/${repository}/contents/${path}`;
+	id:string;
+	name:string;
+	description:string;
+	url:string;
+	created:string;
+	}
+*/
 
-	const response = await fetch(url);
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	return await response.json() as Content[];
+abstract class User
+	{
+	public constructor(protected readonly api:API, protected readonly slug:string)
+		{
+		}
 	}
 
-function toFiles(contents:Content[]):File[]
+class Person extends User
 	{
-	const isFile = (content:Content):boolean => content.type === "file" && content.download_url !== null;
-
-	const toFile = (content:Content):File =>
-		{
-		return {name: content.name, path: content.path, url: content.download_url!};
-		};
-
-	return contents.filter(isFile).map(toFile);
 	}
 
-function toLinks(files:File[]):HTMLAnchorElement[]
+class Organization extends User
 	{
-	const toLink = (file:File):HTMLAnchorElement =>
+	public async getInformations():Promise<any>
 		{
-		const link = document.createElement("a");
+		return await this.api.get<any>(`${EndPoint}orgs/${this.slug}`);
+		}
 
-		link.setAttribute("href", file.url);
-
-		link.textContent = file.name;
-
-		return link;
-		};
-
-	return files.map(toLink);
+	public async getRepositories():Promise<any>
+		{
+		return await this.api.get<any>(`${EndPoint}orgs/${this.slug}/repos`);
+		}
 	}
 
-function links(owner:string, repository:string, path:string = "", element:HTMLElement):void
+class API
 	{
-	getContents(owner, repository, path).then(toFiles).then(toLinks).then(links =>
+	public constructor()
 		{
-		links.forEach(link =>
+		}
+
+	public getOrganization(slug:string):Organization
+		{
+		return new Organization(this, slug);
+		}
+
+	public async api<T>(url:string, options:Nullable<RequestInit> = null):Promise<T>
+		{
+		const response = await fetch(url, options || {});
+
+		//console.debug(response.status, response.statusText);
+
+		if (!response.ok)
 			{
-			element.appendChild(link);
-			});
-		});
+			throw new HTTPError(response.status, response.statusText);
+			}
+
+		return await response.json() as T;
+		}
+
+	public async get<T>(url:string):Promise<T>
+		{
+		return await this.api<T>(url);
+		}
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export
 	{
-	links
+	API,
+	Organization
 	};
